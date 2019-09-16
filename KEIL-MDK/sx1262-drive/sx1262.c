@@ -530,8 +530,8 @@ uint8_t _GetRssiInst(void)
 	check_busy();
 	sel_pin_set(0);
 	spi_rw(SX126X_CMD_GET_RSSI_INST);
-	spi_rw(0xFF);
 	rssi = spi_rw(0xFF);
+//	rssi = spi_rw(0xFF);
 	sel_pin_set (1);
 	return rssi;
 }

@@ -39,7 +39,7 @@ void sys_startup(void)
 	if(*(uint64_t*)param->dev_gateway_addr!=0 &&
 	   *(uint64_t*)param->dev_gateway_addr!=(~0))
 	{
-//		SET_TASK_EVT(SYS_TASK_EVT_LORA);
+		SET_TASK_EVT(SYS_TASK_EVT_LORA);
 	}
 	else
 	{

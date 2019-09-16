@@ -7,9 +7,9 @@ static sys_param_t sys_param;
 
 void sys_param_init(void)
 {
-	flash_read(SYS_PARAM_FLASH_PAGE_ADDR, (uint8_t *)&sys_param, sizeof(sys_param));
+//	flash_read(SYS_PARAM_FLASH_PAGE_ADDR, (uint8_t *)&sys_param, sizeof(sys_param));
 
-	if(sys_param.update_flag == 0XFF)
+//	if(sys_param.update_flag == 0XFF)
 	{
 		sys_param.ble_tx_power = SYS_PARAM_BLE_TX_POWER;
 		sys_param.ble_adv_interval = SYS_PARAM_BLE_ADV_INTERVAL;

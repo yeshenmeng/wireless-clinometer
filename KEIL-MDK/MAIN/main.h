@@ -48,7 +48,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define SYS_HW_VERSION						SYS_HW_VERSION_V0_3_0
+#define SYS_HW_VERSION						SYS_HW_VERSION_V0_3_3
 
 /* 支持的硬件版本 */
 #define SYS_HW_VERSION_V0_3_0				1

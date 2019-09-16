@@ -90,6 +90,12 @@ static void lora_ext_int_cfg(void)
 	nrf_drv_gpiote_in_event_enable(LORA_IRQ_PIN, true);
 }
 
+static void signal_ext_cfg_default(void)
+{
+	nrfx_gpiote_in_event_disable(LORA_IRQ_PIN);
+	nrfx_gpiote_in_uninit(LORA_IRQ_PIN);
+}
+
 /* SPI事件处理函数 */
 static void spi_event_handler(nrf_drv_spi_evt_t const * p_event, void * p_context)
 {
@@ -105,6 +111,7 @@ static void lora_spi_cfg(void)
 	spi_config.miso_pin = LORA_SPI_MISO_PIN;
 	spi_config.mosi_pin = LORA_SPI_MOSI_PIN;
 	spi_config.sck_pin  = LORA_SPI_SCK_PIN;
+	spi_config.irq_priority = 0;
 	APP_ERROR_CHECK(nrf_drv_spi_init(&spi, &spi_config, spi_event_handler, NULL));
 }
 
@@ -181,6 +188,7 @@ static void lora_cfg(void)
 	
 static void lora_cfg_default(void)
 {
+	signal_ext_cfg_default();
 	lora_spi_cfg_default();
 	nrf_gpio_cfg_default(LORA_POWER_PIN);
 	nrf_gpio_cfg_default(LORA_TRANSMIT_PIN);
@@ -600,7 +608,7 @@ lora_obj_t* lora_task_init(lpm_obj_t* lpm_obj)
 	lora_obj.task_operate = lora_task_operate;
 	
 	lora_obj.lpm_obj->task_reg(LORA_TASK_ID);
-	
+
 	return &lora_obj;
 }
 
