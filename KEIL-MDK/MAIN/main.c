@@ -210,7 +210,7 @@ int main(void)
 	m_lora = lora_task_init(m_lpm); 						//LORA任务初始化
 	m_slp = slp_task_init(m_lpm); 							//系统低功耗任务初始化
 	m_inclinometer = inclinometer_task_init(m_lpm); 		//测斜仪任务初始化
-	iot_init(sensor, m_inclinometer); 						//物联网协议属性初始化
+	iot_init(sensor, m_inclinometer, m_lora); 				//物联网协议属性初始化
 
 	/**********************************系统任务设置**********************************/
 	sys_task_t task;

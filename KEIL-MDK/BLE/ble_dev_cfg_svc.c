@@ -248,6 +248,15 @@ uint32_t ble_dev_cfg_init(ble_dev_cfg_t * p_dev_cfg, const ble_dev_cfg_init_t * 
         return err_code;
     }		
 	
+	add_char_params.uuid = DEV_CFG_UUID_LORA_RSSI_CHAR;
+	add_char_params.init_len = 1;
+	add_char_params.max_len = 1;	
+    err_code = characteristic_add(p_dev_cfg->service_handle, &add_char_params, &p_dev_cfg->dev_lora_rssi_char_handles);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
+	
 	add_char_params.uuid = DEV_CFG_UUID_SW_VERSION_CHAR;
 	add_char_params.init_len = 4;
 	add_char_params.max_len = 4;		

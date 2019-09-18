@@ -3,6 +3,7 @@
 #include "main.h"
 #include "iotobject.h"
 #include "inclinometer.h"
+#include "lora_transmission.h"
 
 
 #define LONG_ADDR_ID						1
@@ -23,12 +24,13 @@ typedef struct {
 
 	iot_object_t *sensor;
 	inclinometer_obj_t *inclinometer_obj;
+	lora_obj_t* lora_obj;
 
 	void (*operate)(void);
 } iot_dev_t;
 
 void iot_operate(void);
-iot_dev_t * iot_init(iot_object_t *sensor, inclinometer_obj_t *inclinometer_obj);
+iot_dev_t * iot_init(iot_object_t *sensor, inclinometer_obj_t *inclinometer_obj, lora_obj_t* lora_obj);
 void iot_write_long_addr(uint8_t* value);
 void iot_write_short_addr(uint8_t* value);
 

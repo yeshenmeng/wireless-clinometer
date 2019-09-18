@@ -22,6 +22,7 @@
 #else
 #include "nrf_drv_clock.h"
 #include "nrf_fstorage_nvmc.h"
+#include "nrf_nvmc.h"
 #endif
 
 
@@ -141,46 +142,30 @@ void flash_read(uint32_t startAddr, uint8_t *pData, uint32_t size)
 	APP_ERROR_CHECK(err_code);
 }
 #else
-//uint8_t flash_write(uint32_t pageStartAddr, uint32_t *pData, uint32_t size)
-//{
-//	uint32_t endAddr = pageStartAddr + 4*size;
-//	uint8_t pageNb = (((endAddr - pageStartAddr) % TH_FLASH_PAGE_SIZE_2_POWER) > 0) ?
-//									 (((endAddr - pageStartAddr) >> TH_FLASH_PAGE_SIZE_2_POWER) + 1) :
-//									 ((endAddr - pageStartAddr) >> TH_FLASH_PAGE_SIZE_2_POWER);
-//	
-//	for(uint8_t i=0; i<pageNb; i++)
-//	{
-//		nrf_nvmc_page_erase(pageStartAddr + i * TH_FLASH_PAGE_SIZE_2_POWER);
-//	}
-
-//	nrf_nvmc_write_words(pageStartAddr, pData, size);
-
-//	return 0;
-//}
-
-//void flash_read(uint32_t startAddr,uint8_t *pData, uint32_t size)
-//{
-//	uint8_t i;
-//	for(i = 0; i<size; i++)
-//	{
-//		pData[i] = *((uint8_t*) startAddr);
-//		startAddr++;
-//	}
-//}
-
-/*******************************************************************************
-* Function Name  : flash_read
-* Description    : flash的读函数
-* Input          : u32 startAddr,u32 *p_data,u32 size
-* Attention		 : 输入数据一定是u32 的指针，即数据一定是按照4字节对齐写入的。所以：size也是u32的个数（字节数的4分之一）
-*******************************************************************************/
-void flash_read(uint32_t startAddr,uint32_t *pData,uint32_t size)
+uint8_t flash_write(uint32_t pageStartAddr, uint32_t *pData, uint32_t size)
 {
-	uint32_t i;
+	uint32_t endAddr = pageStartAddr + 4*size;
+	uint8_t pageNb = (((endAddr - pageStartAddr) % TH_FLASH_PAGE_SIZE_2_POWER) > 0) ?
+					 (((endAddr - pageStartAddr) >> TH_FLASH_PAGE_SIZE_2_POWER) + 1) :
+					 ((endAddr - pageStartAddr) >> TH_FLASH_PAGE_SIZE_2_POWER);
+	
+	for(uint8_t i=0; i<pageNb; i++)
+	{
+		nrf_nvmc_page_erase(pageStartAddr + i * TH_FLASH_PAGE_SIZE_2_POWER);
+	}
+
+	nrf_nvmc_write_words(pageStartAddr, pData, size);
+
+	return 0;
+}
+
+void flash_read(uint32_t startAddr,uint8_t *pData, uint32_t size)
+{
+	uint8_t i;
 	for(i = 0; i<size; i++)
 	{
-		pData[i] = *((uint32_t*) startAddr);
-		startAddr += 4;
+		pData[i] = *((uint8_t*) startAddr);
+		startAddr++;
 	}
 }
 #endif

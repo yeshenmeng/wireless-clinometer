@@ -271,10 +271,19 @@ void iot_operate(void)
 		ble_char_update_handle->dev_x_angle_update(IoT_dev.inclinometer_obj->data.x_angle);
 		ble_char_update_handle->dev_y_angle_update(IoT_dev.inclinometer_obj->data.y_angle);
 	}
+	
+	/* 更新LORA信号强度 */
+	static int8_t lora_rssi = -127;
+	if(lora_rssi != IoT_dev.lora_obj->get_rssi())
+	{
+		lora_rssi = IoT_dev.lora_obj->get_rssi();
+		ble_char_update_t* ble_char_update_handle = ble_char_update_handle_get();
+		ble_char_update_handle->dev_lora_rssi_update(lora_rssi);
+	}
 }
 
 /* IoT协议初始化 */
-iot_dev_t * iot_init(iot_object_t *sensor, inclinometer_obj_t *inclinometer_obj)
+iot_dev_t * iot_init(iot_object_t *sensor, inclinometer_obj_t *inclinometer_obj, lora_obj_t* lora_obj)
 {
 	sys_param_t* param = sys_param_get_handle();
 	
@@ -283,6 +292,7 @@ iot_dev_t * iot_init(iot_object_t *sensor, inclinometer_obj_t *inclinometer_obj)
 
 	IoT_dev.sensor = sensor;
 	IoT_dev.inclinometer_obj = inclinometer_obj;
+	IoT_dev.lora_obj = lora_obj;
 	
 	/* IoT对象属性数据初始化 */
 	iot_write_long_addr(param->dev_long_addr);

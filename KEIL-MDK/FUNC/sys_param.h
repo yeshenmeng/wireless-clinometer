@@ -32,7 +32,7 @@
 #define SYS_PARAM_LORA_CRC					1 //LORA校验[0:关,1:开]
 
 /* 设备配置参数 */
-#define SYS_PARAM_DEV_GATEWAY_ADDR			{0x64,0x01,0x20,0x16,0x01,0x01,0x00,0x01} //网关地址
+#define SYS_PARAM_DEV_GATEWAY_ADDR			{0x64,0x01,0x20,0x19,0x09,0x16,0x00,0x01} //网关地址
 #define SYS_PARAM_DEV_LONG_ADDR				{0xC8,0x01,0x20,0x19,0x08,0x12,0x00,0x01} //测点长地址
 #define SYS_PARAM_DEV_SHORT_ADDR			{0x01,0x01} //测点短地址
 
@@ -44,7 +44,7 @@
 
 /* LORA任务参数 */
 #define SWT_LORA_TIME_SLICE_TIME			30*1000u //LORA数据发送时间片时间
-#define LORA_RX_TIMEOUT_BASE				200u //LORA数据接收超时时间基数
+#define LORA_RX_TIMEOUT_BASE				3000u //LORA数据接收超时时间基数
 #define LORA_TX_MAX_DELAY_TIME				5*1000u //LORA数据发送失败最大延时时间
 #define LORA_TX_MAX_FIAL_TIMES				~0u //LORA数据发送失败最大次数
 #define LORA_DELAY_BASE_TIME				200u //LORA数据发送失败延时基数

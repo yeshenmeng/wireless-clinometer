@@ -35,11 +35,12 @@ NRF_SDH_BLE_OBSERVER(_name ## _obs,                                             
 #define DEV_CFG_UUID_BATTERY_CHAR				(DEV_CFG_UUID_SERVICE+7)
 #define DEV_CFG_UUID_TEMPERATURE_CHAR			(DEV_CFG_UUID_SERVICE+8)
 #define DEV_CFG_UUID_X_ANGLE_CHAR				(DEV_CFG_UUID_SERVICE+9)
-#define DEV_CFG_UUID_Y_ANGLE_CHAR				(DEV_CFG_UUID_SERVICE+0)
+#define DEV_CFG_UUID_Y_ANGLE_CHAR				(DEV_CFG_UUID_SERVICE+10)
 #define DEV_CFG_UUID_X_ANGLE_THRESHOLD_CHAR		(DEV_CFG_UUID_SERVICE+11)
 #define DEV_CFG_UUID_Y_ANGLE_THRESHOLD_CHAR		(DEV_CFG_UUID_SERVICE+12)
-#define DEV_CFG_UUID_SW_VERSION_CHAR			(DEV_CFG_UUID_SERVICE+13)
-#define DEV_CFG_UUID_HW_VERSION_CHAR			(DEV_CFG_UUID_SERVICE+14)
+#define DEV_CFG_UUID_LORA_RSSI_CHAR				(DEV_CFG_UUID_SERVICE+13)
+#define DEV_CFG_UUID_SW_VERSION_CHAR			(DEV_CFG_UUID_SERVICE+14)
+#define DEV_CFG_UUID_HW_VERSION_CHAR			(DEV_CFG_UUID_SERVICE+15)
 
 
 // Forward declaration of the ble_dev_cfg_t type.
@@ -86,6 +87,7 @@ struct ble_dev_cfg_s
 	ble_gatts_char_handles_t	dev_y_angle_char_handles; 
 	ble_gatts_char_handles_t	dev_x_angle_threshold_char_handles; 
 	ble_gatts_char_handles_t	dev_y_angle_threshold_char_handles; 
+	ble_gatts_char_handles_t	dev_lora_rssi_char_handles;
     ble_gatts_char_handles_t    dev_sw_version_char_handles; 
     ble_gatts_char_handles_t    dev_hw_version_char_handles;
     uint8_t                     uuid_type;           /**< UUID type for the Service. */

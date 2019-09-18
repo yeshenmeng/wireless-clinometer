@@ -32,6 +32,7 @@ typedef struct {
 	void (*dev_y_angle_update)(float value);
 	void (*dev_x_angle_threshold_update)(float value);
 	void (*dev_y_angle_threshold_update)(float value);
+	void (*dev_lora_rssi_update)(uint8_t value);
 	void (*dev_sw_version_update)(uint8_t* value);
 	void (*dev_hw_version_update)(uint8_t* value);
 }ble_char_update_t;

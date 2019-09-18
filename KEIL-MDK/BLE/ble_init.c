@@ -402,6 +402,18 @@ static void ble_dev_characteristic_y_angle_threshold_update(float value)
 	APP_ERROR_CHECK(err_code);
 }
 
+static void ble_dev_characteristic_lora_rssi_update(uint8_t value)
+{
+	ret_code_t err_code;
+	ble_gatts_value_t ble_gatts_value = {
+		.len = 1,
+		.offset = 0,
+		.p_value = (uint8_t*)&value,
+	};
+	err_code = sd_ble_gatts_value_set(m_conn_handle, m_dev_cfg.dev_lora_rssi_char_handles.value_handle, &ble_gatts_value);
+	APP_ERROR_CHECK(err_code);
+}
+
 static void ble_dev_characteristic_sw_version_update(uint8_t* value)
 {
 	ret_code_t err_code;
@@ -456,6 +468,7 @@ static ble_char_update_t ble_char_update = {
 	.dev_y_angle_update = ble_dev_characteristic_y_angle_update,
 	.dev_x_angle_threshold_update = ble_dev_characteristic_x_angle_threshold_update,
 	.dev_y_angle_threshold_update = ble_dev_characteristic_y_angle_threshold_update,
+	.dev_lora_rssi_update = ble_dev_characteristic_lora_rssi_update,
 	.dev_sw_version_update = ble_dev_characteristic_sw_version_update,
 	.dev_hw_version_update = ble_dev_characteristic_hw_version_update,
 };
@@ -990,6 +1003,7 @@ void ble_softdev_init(void)
 	ble_char_update.dev_y_angle_update(0);
 	ble_char_update.dev_x_angle_threshold_update(param->iot_x_angle_threshold);
 	ble_char_update.dev_y_angle_threshold_update(param->iot_y_angle_threshold);
+	ble_char_update.dev_lora_rssi_update(-127);
 	uint8_t sw_version[] = {(uint16_t)SYS_SW_MODIFY_VERSION,(uint16_t)SYS_SW_MODIFY_VERSION>>8,SYS_SW_SUB_VERSION,SYS_SW_MAIN_VERSION};
 	ble_char_update.dev_sw_version_update(sw_version);
 	uint8_t hw_version[] = {(uint16_t)SYS_HW_MODIFY_VERSION,(uint16_t)SYS_HW_MODIFY_VERSION>>8,SYS_HW_SUB_VERSION,SYS_HW_MAIN_VERSION};

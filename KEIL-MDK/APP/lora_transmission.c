@@ -479,6 +479,7 @@ static void lora_task_operate(void)
 			uint8_t rx_size = 0;
 			uint8_t *rx_data = (uint8_t*)malloc(255);
 			wireless_drv.radio_dio1_irq_func(rx_data, &rx_size);
+			lora_obj.param.rssi = wireless_drv.radio_get_rssi();
 			rx_size = 4 + 1 + *(rx_data + 4) + 2; //根据接收的数据长度获取总的数据长度
 			wireless_comm_services_t* wirelessCommSvc = Wireless_CommSvcGetHandle();
 			wirelessCommSvc->wirelessRxCpltCallBack(rx_data, rx_size); //解析数据
@@ -564,6 +565,11 @@ static void lora_task_operate(void)
 	}
 }
 
+int8_t lora_get_rssi(void)
+{
+	return lora_obj.param.rssi;
+}
+
 void lora_reset(void)
 {
 	lora_state = LORA_IDLE;
@@ -596,6 +602,7 @@ lora_obj_t* lora_task_init(lpm_obj_t* lpm_obj)
 	lora_obj.param.tx_max_delay_time = LORA_TX_MAX_DELAY_TIME;
 	lora_obj.param.task_time_slice = SWT_LORA_TIME_SLICE_TIME;
 	lora_obj.param.rx_timeout_base = LORA_RX_TIMEOUT_BASE;
+	lora_obj.param.rssi = -127;
 	lora_obj.param.tx_fail_times = 0;
 	lora_obj.param.tx_max_fail_times = LORA_TX_MAX_FIAL_TIMES;
 	lora_obj.param.is_idle_enter_lp = ENABLE;
@@ -606,6 +613,7 @@ lora_obj_t* lora_task_init(lpm_obj_t* lpm_obj)
 	lora_obj.task_stop = lora_task_stop;
 	lora_obj.set_tx_data = lora_set_tx_data;
 	lora_obj.task_operate = lora_task_operate;
+	lora_obj.get_rssi = lora_get_rssi;
 	
 	lora_obj.lpm_obj->task_reg(LORA_TASK_ID);
 
