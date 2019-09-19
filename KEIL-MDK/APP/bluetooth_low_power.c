@@ -170,17 +170,20 @@ static void ble_task_operate(void)
 			timer->ble_adv_led->stop();
 			LIGHT_2_OFF();
 			ble_obj.state = BLE_STA_IDLE; /* 更新蓝牙状态为未连接 */
-			ble_state = BLE_STA_ADV;
+//			ble_state = BLE_STA_ADV;
+			ble_state = BLE_STA_ADV_STOP;
 			ble_obj.lpm_obj->task_set_stat(BLE_TASK_ID, LPM_TASK_STA_RUN); 
 			break;
 
 		/* 蓝牙广播超时事件 */
 		case BLE_STA_ADV_TIMEOUT:
+		{
+			status = ble_stop_adv(); /* 停止蓝牙广播 */
+		}
 		/* 停止蓝牙广播 */
 		case BLE_STA_ADV_STOP:
 		{
 			ble_state_t state_tmp = ble_state;
-			status = ble_stop_adv(); /* 停止蓝牙广播 */
 			timer->ble_adv->stop(); /* 停止BLE广播定时器 */
 			timer->ble_adv_led->stop(); /* 停止BLE广播LED指示灯定时器 */
 			LIGHT_2_OFF();

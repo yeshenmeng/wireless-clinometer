@@ -58,7 +58,7 @@
 #define BAT_SOC_DET_HW						0 //硬件电池电量检测开关 
 
 /* 软件信号检测任务参数 */
-#define SIGNAL_DET_TIME_SLICE				30*1000u /* 信号检测时间片 */
+#define SIGNAL_DET_TIME_SLICE				10*1000u /* 信号检测时间片 */
 
 /* 设备任务ID设置 */
 #define LORA_TASK_ID						1 //LORA任务ID

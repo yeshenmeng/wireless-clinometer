@@ -96,17 +96,21 @@ void sys_task_schd(void)
 /* 蓝牙任务停止事件 */
 void ble_task_stop_handler(void* param)
 {
-	ble_state_t ble_state = *(ble_state_t*)param;
-	if(ble_state == BLE_STA_ADV_TIMEOUT)
+	if(lora_disconn == 1)
 	{
-		/* 设置LORA默认网关地址 */
-		if(lora_disconn == 1)
+		ble_state_t ble_state = *(ble_state_t*)param;
+		
+		if(ble_state == BLE_STA_ADV_TIMEOUT)
 		{
 			lora_disconn = 0;
 			sys_param_t* param = sys_param_get_handle();
-			uint8_t default_gateway_addr[] = SYS_PARAM_DEV_GATEWAY_ADDR;
+			uint8_t default_gateway_addr[] = SYS_PARAM_DEV_GATEWAY_ADDR; //设置LORA默认网关地址
 			memcpy(param->dev_gateway_addr, default_gateway_addr, sizeof(default_gateway_addr));
-			SET_TASK_EVT(SYS_TASK_EVT_LORA); //启动LORA传输任务
+			SET_TASK_EVT(SYS_TASK_EVT_LORA);
+		}
+		else if(ble_state == BLE_STA_ADV_STOP)
+		{
+			SET_TASK_EVT(SYS_TASK_EVT_LORA);
 		}
 	}
 
