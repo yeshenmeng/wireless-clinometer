@@ -11,7 +11,7 @@
 #define SYS_PARAM_FLASH_PAGE_ADDR			ADDR_FLASH_PAGE_80 //系统参数存储地址
 
 /* 蓝牙配置参数 */
-#define SYS_PARAM_BLE_DEV_NAME				"TEO_WI_X" //设备名字
+#define SYS_PARAM_BLE_DEV_NAME_PREFIX		"TEO_WI_" //设备名字前缀
 #define SYS_PARAM_BLE_TX_POWER				6 //蓝牙发射功率[0:-40dBm,1:-20dBm,2:-16dBm,3:-12dBm,4:-8dBm,5:-4dBm,6:0dBm,7:+3dBm,8:+4dBm]
 #define SYS_PARAM_BLE_ADV_INTERVAL			100 //蓝牙广播间隔[20~10240ms]
 #define SYS_PARAM_BLE_ADV_TIME				15 //蓝牙广播时间[1~65535s,0:无限广播]
@@ -33,7 +33,7 @@
 
 /* 设备配置参数 */
 #define SYS_PARAM_DEV_GATEWAY_ADDR			{0x64,0x01,0x20,0x19,0x09,0x16,0x00,0x01} //网关地址
-#define SYS_PARAM_DEV_LONG_ADDR				{0xC8,0x01,0x20,0x19,0x08,0x12,0x00,0x01} //测点长地址
+#define SYS_PARAM_DEV_LONG_ADDR				{0xC8,0x01,0x20,0x19,0x08,0x12,0x00,0x03} //测点长地址
 #define SYS_PARAM_DEV_SHORT_ADDR			{0x01,0x01} //测点短地址
 
 /* IOT配置参数 */

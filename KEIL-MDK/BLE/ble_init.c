@@ -546,11 +546,15 @@ static void gap_params_init(void)
 	ret_code_t              err_code;
 	ble_gap_conn_params_t   gap_conn_params;
 	ble_gap_conn_sec_mode_t sec_mode;
-
+	
 	/* GAP服务特征：设备名字设置 */
 	/* 设置GAP的安全模式，即设备名称特征的写权限 */
+	char dev_name[20];
+	sys_param_t* param = sys_param_get_handle();
+	uint16_t dev_name_suffix = ((uint16_t)param->dev_long_addr[6] << 8) | param->dev_long_addr[7];
+	sprintf(dev_name, "%s%d", SYS_PARAM_BLE_DEV_NAME_PREFIX, dev_name_suffix);
 	BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
-	err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t *)SYS_PARAM_BLE_DEV_NAME, strlen(SYS_PARAM_BLE_DEV_NAME));
+	err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t *)dev_name, strlen(dev_name));
 	APP_ERROR_CHECK(err_code);
 
 	/* GAP服务特征：设备外观设置 */
